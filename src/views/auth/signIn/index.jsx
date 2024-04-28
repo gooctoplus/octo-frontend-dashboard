@@ -1,27 +1,6 @@
 /* eslint-disable */
-/*!
-  _   _  ___  ____  ___ ________  _   _   _   _ ___   
- | | | |/ _ \|  _ \|_ _|__  / _ \| \ | | | | | |_ _| 
- | |_| | | | | |_) || |  / / | | |  \| | | | | || | 
- |  _  | |_| |  _ < | | / /| |_| | |\  | | |_| || |
- |_| |_|\___/|_| \_\___/____\___/|_| \_|  \___/|___|
-                                                                                                                                                                                                                                                                                                                                       
-=========================================================
-* Horizon UI - v1.1.0
-=========================================================
 
-* Product Page: https://www.horizon-ui.com/
-* Copyright 2023 Horizon UI (https://www.horizon-ui.com/)
-
-* Designed and Coded by Simmmple
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 // Chakra imports
 import {
@@ -65,8 +44,40 @@ function SignIn() {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.200" }
   );
+
+  const [loginData, setLoginData] = useState({
+    email: '',
+    password: '',
+  })
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
+
+  const handleInpuChange = (value, key) => {
+    switch(key) {
+      case 'email':
+        setLoginData({
+          ...loginData,
+          ...{email: value}
+        })
+        break;
+      case 'password':
+        setLoginData({
+          ...loginData,
+          ...{password: value}
+        })
+        break;
+      default:
+        break;
+    }
+  }
+
+  const handleLogin = () => {
+    if (!(loginData.email && loginData.password)) {
+      return;
+    }
+    window.location.href = '/#/admin/default'
+    console.log("loginData", loginData)
+  }
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
       <Flex
@@ -77,10 +88,14 @@ function SignIn() {
         h='100%'
         alignItems='start'
         justifyContent='center'
-        mb={{ base: "30px", md: "60px" }}
-        px={{ base: "25px", md: "0px" }}
-        mt={{ base: "40px", md: "14vh" }}
-        flexDirection='column'>
+        mb={{ base: "10px", md: "5px" }}
+        px={{ base: "25px", md: "40px" }}
+        mt={{ base: "5px", md: "5px" }}
+        flexDirection='column'
+        backgroundColor='#fff'
+        boxShadow='0 12px 40px rgba(0,0,0,0.12)'
+        padding='40px'
+        overflow='hidden'>
         <Box me='auto'>
           <Heading color={textColor} fontSize='36px' mb='10px'>
             Sign In
@@ -147,6 +162,7 @@ function SignIn() {
               mb='24px'
               fontWeight='500'
               size='lg'
+              onChange={(e)=> handleInpuChange(e.target.value, 'email')}
             />
             <FormLabel
               ms='4px'
@@ -165,6 +181,7 @@ function SignIn() {
                 size='lg'
                 type={show ? "text" : "password"}
                 variant='auth'
+                onChange={(e)=> handleInpuChange(e.target.value, 'password')}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
                 <Icon
@@ -207,7 +224,8 @@ function SignIn() {
               fontWeight='500'
               w='100%'
               h='50'
-              mb='24px'>
+              mb='24px'
+              onClick={handleLogin}>
               Sign In
             </Button>
           </FormControl>
