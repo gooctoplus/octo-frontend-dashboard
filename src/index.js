@@ -9,8 +9,6 @@ import { ChakraProvider } from "@chakra-ui/react";
 import theme from "theme/theme";
 import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 
-console.log("hello husky");
-
 ReactDOM.createRoot(
   <ChakraProvider theme={theme}>
     <React.StrictMode>
