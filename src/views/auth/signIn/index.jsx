@@ -26,6 +26,9 @@ import illustration from "assets/img/auth/auth.png";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
+// login service
+// import {login} from 'services/authService.js';
+import { useAuth } from "contexts/authContext";
 
 function SignIn() {
   // Chakra color mode
@@ -44,6 +47,8 @@ function SignIn() {
     { bg: "secondaryGray.300" },
     { bg: "whiteAlpha.200" }
   );
+
+  const {login} = useAuth();
 
   const [loginData, setLoginData] = useState({
     email: '',
@@ -71,12 +76,22 @@ function SignIn() {
     }
   }
 
-  const handleLogin = () => {
-    if (!(loginData.email && loginData.password)) {
-      return;
+  const handleLogin = async (event) => {
+    console.log('handle login');
+    // event.preventDefault();
+    try{
+      const data = await login(loginData);
+      console.log('login data',data);
+    }catch(error){
+      console.log('Failed to login:',error);
     }
-    window.location.href = '/#/admin/default'
-    console.log("loginData", loginData)
+
+
+    // if (!(loginData.email && loginData.password)) {
+    //   return;
+    // }
+    // window.location.href = '/#/admin/default'
+    // console.log("loginData", loginData)
   }
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>

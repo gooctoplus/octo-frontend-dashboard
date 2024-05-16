@@ -12,7 +12,7 @@ function AuthIllustration(props) {
           sm: "initial",
           md: "unset",
           lg: "100vh",
-          xl: "97vh",
+          xl: "100vh",
         }}
         w='100%'
         maxW={{ md: "100%", lg: "100%" }}

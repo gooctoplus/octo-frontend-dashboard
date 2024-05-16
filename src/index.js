@@ -8,9 +8,11 @@ import RtlLayout from 'layouts/rtl';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from 'theme/theme';
 import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
+import { AuthProvider } from 'contexts/authContext';
 
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
+		<AuthProvider>
 		<React.StrictMode>
 			<ThemeEditorProvider>
 				<HashRouter>
@@ -23,6 +25,7 @@ ReactDOM.render(
 				</HashRouter>
 			</ThemeEditorProvider>
 		</React.StrictMode>
+		</AuthProvider>
 	</ChakraProvider>,
 	document.getElementById('root')
 );

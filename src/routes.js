@@ -7,6 +7,7 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
+  MdLogout
 } from "react-icons/md";
 
 // Admin Imports
@@ -57,12 +58,25 @@ const routes = [
     component: Profile,
   },
   {
-    name: "Logout",
+    name: "Signin",
     layout: "/auth",
     path: "/sign-in",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: SignInCentered,
+    hide: true
   },
+];
+
+export const Logout = [
+  {
+    name: "Log Out",
+    layout: "/auth",
+    path: "/sign-out",
+    icon: (
+      <Icon as={MdLogout} width='16px' height='16px' color='inherit' />
+    ),
+    component: SignInCentered,
+  }
 ];
 
 export default routes;
