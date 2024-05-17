@@ -1,7 +1,7 @@
 import React, { useState, createContext, useContext, useReducer } from "react";
 import axiosInstance from "services/axiosInstance";
 import { API_URL } from "utils/urls";
-import AuthData from 'mocks/auth'
+import AuthData from "mocks/auth";
 
 const initialState = {
   user: null,
@@ -10,20 +10,19 @@ const initialState = {
 const AuthContext = createContext({
   ...initialState,
   method: "Auth",
-  login: async (email, password) => {},
+  login: async (params) => {},
 });
 
 export const AuthProvider = ({ children }) => {
   const [state] = useReducer(initialState);
   let [user, setUser] = useState("");
 
-  const login = async (email, password) => {
+  const login = async (params) => {
     try {
       const response = await axiosInstance.post(API_URL.LOGIN, {
-        email,
-        password,
+        params,
       });
-    // const response = AuthData
+      // const response = AuthData
       console.log("response", response);
       return response;
     } catch (error) {
@@ -33,8 +32,8 @@ export const AuthProvider = ({ children }) => {
 
   const config = {
     ...state,
-    method: 'Auth',
-    login
+    method: "Auth",
+    login,
   };
 
   return <AuthContext.Provider value={config}>{children}</AuthContext.Provider>;
