@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 // Chakra imports
 import {
   Box,
@@ -29,6 +29,8 @@ import { RiEyeCloseLine } from "react-icons/ri";
 // login service
 // import {login} from 'services/authService.js';
 import { useAuth } from "contexts/authContext";
+import { statusCode } from "utils/constants";
+
 
 function SignIn() {
   // Chakra color mode
@@ -49,6 +51,7 @@ function SignIn() {
   );
 
   const { login } = useAuth();
+  const history = useHistory();
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -114,8 +117,14 @@ function SignIn() {
       return;
     }
     try {
-      const data = await login(loginData);
-      console.log("login data", data);
+      const response = await login(loginData);
+      console.log("login data", response);
+      const {data, status, statusText} = response;
+      if(statusText === "OK"){
+        history.push('/admin');
+      }else if(statusText === 'Unauthorized'){
+        console.log('login error');
+      }
     } catch (error) {
       console.log("Failed to login:", error);
     }
@@ -170,7 +179,7 @@ function SignIn() {
           me="auto"
           mb={{ base: "20px", md: "auto" }}
         >
-          <Button
+          {/* <Button
             fontSize="sm"
             me="0px"
             mb="26px"
@@ -193,7 +202,7 @@ function SignIn() {
               or
             </Text>
             <HSeparator />
-          </Flex>
+          </Flex> */}
           <FormControl>
             <FormLabel
               display="flex"
@@ -292,7 +301,7 @@ function SignIn() {
               Sign In
             </Button>
           </FormControl>
-          <Flex
+          {/* <Flex
             flexDirection="column"
             justifyContent="center"
             alignItems="start"
@@ -312,7 +321,7 @@ function SignIn() {
                 </Text>
               </NavLink>
             </Text>
-          </Flex>
+          </Flex> */}
         </Flex>
       </Flex>
     </DefaultAuth>
